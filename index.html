@@ -468,10 +468,9 @@
                     .map(cb => bankNames[cb.value] || cb.value)
                     .join(', ');
                 
-                // Add "Outros" field if filled
-                const otherBanks = document.getElementById('otherBanks').value.trim();
-                if (otherBanks) {
-                    selectedBanks = selectedBanks ? selectedBanks + ', ' + otherBanks : otherBanks;
+                // Add "Outros" field from FormData if filled
+                if (data.otherBanks && data.otherBanks.trim()) {
+                    selectedBanks = selectedBanks ? selectedBanks + ', ' + data.otherBanks.trim() : data.otherBanks.trim();
                 }
                 
                 data.selectedBanksArray = selectedBanks;
