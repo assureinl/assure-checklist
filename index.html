@@ -457,10 +457,10 @@
                     }
                 }
                 
-                // Convert serviços to readable names
+                // Convert serviços to readable names (com bullet points e <br>)
                 const servicosArray = Array.from(document.querySelectorAll('input[name="servicos"]:checked'))
-                    .map(cb => servicoNames[cb.value] || cb.value)
-                    .join(', ');
+                    .map(cb => '• ' + (servicoNames[cb.value] || cb.value))
+                    .join('<br>');
                 data.servicosArray = servicosArray;
                 
                 // Collect selected banks with readable names
