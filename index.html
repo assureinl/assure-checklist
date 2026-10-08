@@ -446,9 +446,16 @@
                     return;
                 }
                 
-                // Collect form data
+                // Collect form data (excludes checkboxes, we'll handle them manually)
                 const formData = new FormData(this);
-                const data = Object.fromEntries(formData);
+                const data = {};
+                
+                // Collect only text/email/radio/select fields
+                for (let [key, value] of formData.entries()) {
+                    if (!['servicos', 'bank'].includes(key)) {
+                        data[key] = value;
+                    }
+                }
                 
                 // Convert serviços to readable names
                 const servicosArray = Array.from(document.querySelectorAll('input[name="servicos"]:checked'))
