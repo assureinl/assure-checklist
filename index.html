@@ -410,6 +410,13 @@
             'outros': 'Outros'
         };
 
+        // Mapa de serviços: value -> nome legível
+        const servicoNames = {
+            'balanco-patrimonial': 'Balanço Patrimonial',
+            'imposto-renda-americano': 'Preparação de Imposto de Renda Americano',
+            'brgaap-llcs': 'Balanço BRGAAP para LLCs Americanas'
+        };
+
         function toggleBankDetails() {
             const hasBankAccounts = document.querySelector('input[name="hasBankAccounts"]:checked')?.value;
             const bankDetails = document.getElementById('bankDetails');
@@ -443,11 +450,17 @@
                 const formData = new FormData(this);
                 const data = Object.fromEntries(formData);
                 
+                // Convert serviços to readable names
+                const servicosArray = Array.from(document.querySelectorAll('input[name="servicos"]:checked'))
+                    .map(cb => servicoNames[cb.value] || cb.value)
+                    .join(', ');
+                data.servicosArray = servicosArray;
+                
                 // Collect selected banks with readable names
                 const selectedBanks = Array.from(document.querySelectorAll('input[name="bank"]:checked'))
-                    .map(cb => bankNames[cb.value] || cb.value);
-                data.selectedBanks = selectedBanks;
-                data.selectedBanksArray = selectedBanks.join(', ');
+                    .map(cb => bankNames[cb.value] || cb.value)
+                    .join(', ');
+                data.selectedBanksArray = selectedBanks;
                 
                 // Add timestamp
                 data.timestamp = new Date().toISOString();
