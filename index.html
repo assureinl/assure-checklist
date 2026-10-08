@@ -464,9 +464,16 @@
                 data.servicosArray = servicosArray;
                 
                 // Collect selected banks with readable names
-                const selectedBanks = Array.from(document.querySelectorAll('input[name="bank"]:checked'))
+                let selectedBanks = Array.from(document.querySelectorAll('input[name="bank"]:checked'))
                     .map(cb => bankNames[cb.value] || cb.value)
                     .join(', ');
+                
+                // Add "Outros" field if filled
+                const otherBanks = document.getElementById('otherBanks').value.trim();
+                if (otherBanks) {
+                    selectedBanks = selectedBanks ? selectedBanks + ', ' + otherBanks : otherBanks;
+                }
+                
                 data.selectedBanksArray = selectedBanks;
                 
                 // Add timestamp
