@@ -468,6 +468,10 @@
                     .map(cb => bankNames[cb.value] || cb.value)
                     .join(', ');
                 
+                // Debug: check otherBanks value
+                console.log('otherBanks raw:', data.otherBanks);
+                console.log('otherBanks trimmed:', data.otherBanks ? data.otherBanks.trim() : 'vazio');
+                
                 // Add "Outros" field from FormData if filled
                 if (data.otherBanks && data.otherBanks.trim()) {
                     selectedBanks = selectedBanks ? selectedBanks + ', ' + data.otherBanks.trim() : data.otherBanks.trim();
