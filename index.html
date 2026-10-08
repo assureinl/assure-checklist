@@ -472,6 +472,11 @@
                 // Add timestamp
                 data.timestamp = new Date().toISOString();
                 
+                // Debug logs
+                console.log('Dados coletados:', data);
+                console.log('Serviços:', servicosArray);
+                console.log('Bancos:', selectedBanks);
+                
                 // Send to Make.com webhook
                 const webhookUrl = 'https://hook.us2.make.com/frjhyotus2dg2fqfj6iqydrecqa60c8u';
                 
