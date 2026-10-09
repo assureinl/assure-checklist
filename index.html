@@ -12,18 +12,25 @@
         .subtitle { color: #666; font-size: 13px; margin: 5px 0 0 0; }
         .form-group { margin-bottom: 25px; }
         label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
-        input[type="text"], input[type="email"], input[type="file"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: inherit; }
+        input[type="text"], input[type="email"], input[type="number"], input[type="file"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: inherit; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: #8AAD2A; box-shadow: 0 0 5px rgba(138,173,42,0.3); }
         .section-title { background-color: #8AAD2A; color: white; padding: 12px 15px; font-size: 15px; font-weight: bold; margin: 25px 0 15px 0; border-radius: 4px; }
         .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
         .checkbox-item { display: flex; align-items: center; }
         .checkbox-item input { width: auto; margin-right: 10px; cursor: pointer; }
+        .banks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+        .bank-item { display: flex; align-items: center; }
+        .bank-item input { width: auto; margin-right: 8px; cursor: pointer; }
+        .hidden { display: none; }
         button { width: 100%; padding: 12px; background-color: #8AAD2A; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; }
         button:hover { background-color: #6d8620; }
         .message { padding: 12px; border-radius: 4px; margin-bottom: 15px; font-weight: 500; display: none; }
         .message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; display: block; }
         .message.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
         .file-info { font-size: 12px; color: #666; margin-bottom: 8px; }
+        .radio-group { display: flex; gap: 20px; }
+        .radio-group label { font-weight: normal; display: flex; align-items: center; margin: 0; }
+        .radio-group input { width: auto; margin-right: 8px; }
     </style>
 </head>
 <body>
@@ -81,27 +88,71 @@
 
             <div class="form-group">
                 <label>1. Possui contas bancárias? *</label>
-                <div style="display: flex; gap: 20px;">
-                    <label style="font-weight: normal; display: flex; align-items: center;">
-                        <input type="radio" name="hasBankAccounts" value="sim" required style="width: auto; margin-right: 8px;">
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="hasBankAccounts" value="sim" required onchange="toggleBankDetails()">
                         Sim
                     </label>
-                    <label style="font-weight: normal; display: flex; align-items: center;">
-                        <input type="radio" name="hasBankAccounts" value="nao" required style="width: auto; margin-right: 8px;">
+                    <label>
+                        <input type="radio" name="hasBankAccounts" value="nao" required onchange="toggleBankDetails()">
                         Não
                     </label>
                 </div>
             </div>
 
+            <div id="bankDetails" class="hidden">
+                <div class="form-group">
+                    <label>Quantas contas bancárias?</label>
+                    <input type="number" name="bankCount" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label>Quais bancos/corretoras? (marque os que possui)</label>
+                    <div class="banks-grid">
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Andbank"> Andbank</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Avenue"> Avenue</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="BB Americas"> BB Americas</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Bolton Global"> Bolton Global</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Bradesco"> Bradesco</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="BTG Pactual"> BTG Pactual</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="CA Indosuez"> CA Indosuez</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Charles Schwab"> Charles Schwab</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Citibank"> Citibank</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Credit Suisse"> Credit Suisse</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="EFG Fidelity"> EFG Fidelity</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Goldman Sachs"> Goldman Sachs</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="HSBC"> HSBC</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Interactive Brokers"> Interactive Brokers</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Itaú"> Itaú</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="JP Morgan"> JP Morgan</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Julius Baer"> Julius Baer</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Merrill Lynch"> Merrill Lynch</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Morgan Stanley"> Morgan Stanley</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Raymond James"> Raymond James</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Safra"> Safra</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Santander"> Santander</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Scotia Wealth"> Scotia Wealth</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="UBS"> UBS</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="XP"> XP</label></div>
+                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Outros"> Outros</label></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="otherBanks">Se "Outros", especifique quais bancos:</label>
+                    <textarea name="otherBanks" placeholder="Ex: Banco X, Banco Y..."></textarea>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>2. Possui investimentos em criptoativos? *</label>
-                <div style="display: flex; gap: 20px;">
-                    <label style="font-weight: normal; display: flex; align-items: center;">
-                        <input type="radio" name="hasCrypto" value="sim" required style="width: auto; margin-right: 8px;">
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="hasCrypto" value="sim" required>
                         Sim
                     </label>
-                    <label style="font-weight: normal; display: flex; align-items: center;">
-                        <input type="radio" name="hasCrypto" value="nao" required style="width: auto; margin-right: 8px;">
+                    <label>
+                        <input type="radio" name="hasCrypto" value="nao" required>
                         Não
                     </label>
                 </div>
@@ -109,13 +160,13 @@
 
             <div class="form-group">
                 <label>3. Possui investimentos em fundos ou private equity não custodiados nos extratos bancários? *</label>
-                <div style="display: flex; gap: 20px;">
-                    <label style="font-weight: normal; display: flex; align-items: center;">
-                        <input type="radio" name="hasFundsEquity" value="sim" required style="width: auto; margin-right: 8px;">
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="hasFundsEquity" value="sim" required>
                         Sim
                     </label>
-                    <label style="font-weight: normal; display: flex; align-items: center;">
-                        <input type="radio" name="hasFundsEquity" value="nao" required style="width: auto; margin-right: 8px;">
+                    <label>
+                        <input type="radio" name="hasFundsEquity" value="nao" required>
                         Não
                     </label>
                 </div>
@@ -123,13 +174,13 @@
 
             <div class="form-group">
                 <label>4. Possui participação acionária em outra empresa? *</label>
-                <div style="display: flex; gap: 20px;">
-                    <label style="font-weight: normal; display: flex; align-items: center;">
-                        <input type="radio" name="hasEquityParticipation" value="sim" required style="width: auto; margin-right: 8px;">
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="hasEquityParticipation" value="sim" required>
                         Sim
                     </label>
-                    <label style="font-weight: normal; display: flex; align-items: center;">
-                        <input type="radio" name="hasEquityParticipation" value="nao" required style="width: auto; margin-right: 8px;">
+                    <label>
+                        <input type="radio" name="hasEquityParticipation" value="nao" required>
                         Não
                     </label>
                 </div>
@@ -140,6 +191,16 @@
     </div>
 
     <script>
+        function toggleBankDetails() {
+            const hasBankAccounts = document.querySelector('input[name="hasBankAccounts"]:checked')?.value;
+            const bankDetails = document.getElementById('bankDetails');
+            if (hasBankAccounts === 'sim') {
+                bankDetails.classList.remove('hidden');
+            } else {
+                bankDetails.classList.add('hidden');
+            }
+        }
+
         document.getElementById('checklistForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -163,10 +224,20 @@
                     return;
                 }
                 
+                const selectedBanks = Array.from(this.querySelectorAll('input[name="bank"]:checked'))
+                    .map(cb => cb.value)
+                    .join(', ');
+                
                 const data = {
                     clientName: this.querySelector('input[name="clientName"]').value,
                     clientEmail: this.querySelector('input[name="clientEmail"]').value,
                     companyName: this.querySelector('input[name="companyName"]').value,
+                    hasBankAccounts: this.querySelector('input[name="hasBankAccounts"]:checked').value,
+                    bankCount: this.querySelector('input[name="bankCount"]').value || '0',
+                    selectedBanks: selectedBanks,
+                    hasCrypto: this.querySelector('input[name="hasCrypto"]:checked').value,
+                    hasFundsEquity: this.querySelector('input[name="hasFundsEquity"]:checked').value,
+                    hasEquityParticipation: this.querySelector('input[name="hasEquityParticipation"]:checked').value,
                     arquivo: file.name,
                     tamanhoArquivo: (file.size / 1024 / 1024).toFixed(2) + ' MB',
                     timestamp: new Date().toISOString()
