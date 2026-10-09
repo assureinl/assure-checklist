@@ -5,195 +5,533 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checklist Orçamento - Assure International</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f5f5f5; color: #333; }
-        .container { max-width: 600px; margin: 40px auto; background: white; padding: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .header { text-align: center; border-bottom: 3px solid #8AAD2A; padding-bottom: 20px; margin-bottom: 30px; }
-        h1 { color: #333; font-size: 24px; margin: 0; }
-        .subtitle { color: #666; font-size: 13px; margin: 5px 0 0 0; }
-        .form-group { margin-bottom: 25px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
-        input[type="text"], input[type="email"], input[type="number"], input[type="file"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: inherit; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #8AAD2A; box-shadow: 0 0 5px rgba(138,173,42,0.3); }
-        .section-title { background-color: #8AAD2A; color: white; padding: 12px 15px; font-size: 15px; font-weight: bold; margin: 25px 0 15px 0; border-radius: 4px; }
-        .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
-        .checkbox-item { display: flex; align-items: center; }
-        .checkbox-item input { width: auto; margin-right: 10px; cursor: pointer; }
-        .banks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
-        .bank-item { display: flex; align-items: center; }
-        .bank-item input { width: auto; margin-right: 8px; cursor: pointer; }
-        .hidden { display: none; }
-        button { width: 100%; padding: 12px; background-color: #8AAD2A; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        button:hover { background-color: #6d8620; }
-        .message { padding: 12px; border-radius: 4px; margin-bottom: 15px; font-weight: 500; display: none; }
-        .message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; display: block; }
-        .message.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
-        .file-info { font-size: 12px; color: #666; margin-bottom: 8px; }
-        .radio-group { display: flex; gap: 20px; }
-        .radio-group label { font-weight: normal; display: flex; align-items: center; margin: 0; }
-        .radio-group input { width: auto; margin-right: 8px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #8AAD2A;
+            padding-bottom: 20px;
+        }
+        .lang-selector {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+        .lang-selector select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 13px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        input[type="file"] {
+            padding: 8px;
+            cursor: pointer;
+        }
+        input[type="file"]::file-selector-button {
+            background-color: #8AAD2A;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background-color: #6d8620;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #8AAD2A;
+            box-shadow: 0 0 5px rgba(138, 173, 42, 0.3);
+        }
+        .section-title {
+            background-color: #8AAD2A;
+            color: white;
+            padding: 12px 15px;
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .question {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #8AAD2A;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            width: auto;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        .banks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .bank-checkbox {
+            display: flex;
+            align-items: center;
+        }
+        .bank-checkbox label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        .bank-checkbox input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #8AAD2A;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #6d8620;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .message {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .file-info {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .file-list {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background-color: white;
+            border: 1px solid #eee;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        .file-item-name {
+            flex: 1;
+            word-break: break-word;
+        }
+        .file-item-size {
+            color: #999;
+            margin: 0 10px;
+            font-size: 11px;
+        }
+        .file-item-remove {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        .file-item-remove:hover {
+            background-color: #ff5252;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>📋 Checklist Orçamento</h1>
-            <p class="subtitle">Balanço Patrimonial 2026 - Assure International</p>
+        <div class="lang-selector">
+            <select id="languageSelect" onchange="changeLanguage()">
+                <option value="pt">🇧🇷 Português</option>
+                <option value="en">🇺🇸 English</option>
+            </select>
         </div>
 
-        <div id="message" class="message"></div>
+        <div class="header">
+            <h1 data-pt="📋 Checklist Orçamento" data-en="📋 Checklist">📋 Checklist Orçamento</h1>
+            <p class="subtitle" data-pt="Balanço Patrimonial 2026 - Assure International" data-en="Financial Statement 2026 - Assure International">Balanço Patrimonial 2026 - Assure International</p>
+        </div>
+
+        <div id="message"></div>
 
         <form id="checklistForm">
-            <div class="section-title">📝 Informações do Cliente</div>
-
             <div class="form-group">
-                <label>Nome do Cliente *</label>
-                <input type="text" name="clientName" required>
+                <label for="clientName" data-pt="Nome do Cliente *" data-en="Client Name *">Nome do Cliente *</label>
+                <input type="text" id="clientName" name="clientName" required>
             </div>
 
             <div class="form-group">
-                <label>Email do Cliente *</label>
-                <input type="email" name="clientEmail" required>
+                <label for="clientEmail" data-pt="Email do Cliente *" data-en="Client Email *">Email do Cliente *</label>
+                <input type="email" id="clientEmail" name="clientEmail" required>
             </div>
 
             <div class="form-group">
-                <label>Nome da Empresa *</label>
-                <input type="text" name="companyName" required>
+                <label for="companyName" data-pt="Nome da Empresa *" data-en="Company Name *">Nome da Empresa *</label>
+                <input type="text" id="companyName" name="companyName" required>
             </div>
 
             <div class="form-group">
-                <label>Extratos e Documentos *</label>
-                <p class="file-info">(PDF, ZIP ou múltiplos arquivos - máx 25MB)</p>
-                <input type="file" name="extratos" accept=".pdf,.zip,.xlsx,.xls,.doc,.docx,.jpg,.png" required>
+                <label for="extratos" data-pt="Extratos e Documentos (obrigatório) *" data-en="Bank Statements & Documents (required) *">Extratos e Documentos (obrigatório) *</label>
+                <div class="file-info" data-pt="Máximo 25MB por arquivo. Aceita: PDF, ZIP, Excel, Word, Imagens. Você pode enviar vários arquivos." data-en="Maximum 25MB per file. Accepts: PDF, ZIP, Excel, Word, Images. You can upload multiple files.">
+                    Máximo 25MB por arquivo. Aceita: PDF, ZIP, Excel, Word, Imagens. Você pode enviar vários arquivos.
+                </div>
+                <input 
+                    type="file" 
+                    id="extratos" 
+                    name="extratos"
+                    accept=".pdf,.zip,.xlsx,.xls,.docx,.doc,.jpg,.jpeg,.png,.gif"
+                    multiple
+                    onchange="updateFileList()"
+                    required
+                >
+                <div id="fileList" class="file-list hidden"></div>
             </div>
 
+            <div class="section-title" data-pt="Serviços para Orçamento *" data-en="Services for Quote *">Serviços para Orçamento *</div>
             <div class="form-group">
-                <label>Serviços para Orçamento * (marque os necessários)</label>
                 <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" name="servicos" value="balanco-patrimonial">
-                        <label style="margin: 0; font-weight: normal;">Balanço Patrimonial</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" name="servicos" value="imposto-renda-americano">
-                        <label style="margin: 0; font-weight: normal;">Preparação de Imposto de Renda Americano</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" name="servicos" value="brgaap-llcs">
-                        <label style="margin: 0; font-weight: normal;">Balanço BRGAAP para LLCs Americanas</label>
-                    </div>
+                    <input type="checkbox" id="balanco" name="servicos" value="balanco-patrimonial">
+                    <label for="balanco" data-pt="Balanço Patrimonial" data-en="Balance Sheet">Balanço Patrimonial</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="imposto" name="servicos" value="imposto-renda-americano">
+                    <label for="imposto" data-pt="Preparação de Imposto de Renda Americano" data-en="US Income Tax Preparation">Preparação de Imposto de Renda Americano</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="brgaap" name="servicos" value="brgaap-llcs">
+                    <label for="brgaap" data-pt="Balanço BRGAAP para LLCs Americanas" data-en="BRGAAP Balance for US LLCs">Balanço BRGAAP para LLCs Americanas</label>
                 </div>
             </div>
 
-            <div class="section-title">💰 Ativos</div>
+            <div class="section-title" data-pt="Informações Adicionais" data-en="Additional Information">Informações Adicionais</div>
 
-            <div class="form-group">
-                <label>1. Possui contas bancárias? *</label>
+            <div class="question">
+                <p data-pt="1. Possui contas bancárias? *" data-en="1. Do you have bank accounts? *"><strong>1. Possui contas bancárias? *</strong></p>
                 <div class="radio-group">
                     <label>
-                        <input type="radio" name="hasBankAccounts" value="sim" required onchange="toggleBankDetails()">
-                        Sim
+                        <input type="radio" name="hasBankAccounts" value="sim" onchange="toggleBankDetails()" required>
+                        <span data-pt="Sim" data-en="Yes">Sim</span>
                     </label>
                     <label>
-                        <input type="radio" name="hasBankAccounts" value="nao" required onchange="toggleBankDetails()">
-                        Não
+                        <input type="radio" name="hasBankAccounts" value="nao" onchange="toggleBankDetails()" required>
+                        <span data-pt="Não" data-en="No">Não</span>
                     </label>
                 </div>
-            </div>
 
-            <div id="bankDetails" class="hidden">
-                <div class="form-group">
-                    <label>Quantas contas bancárias?</label>
-                    <input type="number" name="bankCount" min="1">
-                </div>
+                <div id="bankDetails" class="hidden">
+                    <label for="bankCount" data-pt="Quantas contas bancárias?" data-en="How many bank accounts?">Quantas contas bancárias?</label>
+                    <input type="number" id="bankCount" name="bankCount" min="1">
 
-                <div class="form-group">
-                    <label>Quais bancos/corretoras? (marque os que possui)</label>
+                    <p style="margin-top: 15px; margin-bottom: 10px;" data-pt="Quais bancos?" data-en="Which banks?"><strong data-pt="Quais bancos?" data-en="Which banks?">Quais bancos?</strong></p>
                     <div class="banks-grid">
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Andbank"> Andbank</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Avenue"> Avenue</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="BB Americas"> BB Americas</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Bolton Global"> Bolton Global</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Bradesco"> Bradesco</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="BTG Pactual"> BTG Pactual</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="CA Indosuez"> CA Indosuez</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Charles Schwab"> Charles Schwab</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Citibank"> Citibank</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Credit Suisse"> Credit Suisse</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="EFG Fidelity"> EFG Fidelity</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Goldman Sachs"> Goldman Sachs</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="HSBC"> HSBC</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Interactive Brokers"> Interactive Brokers</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Itaú"> Itaú</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="JP Morgan"> JP Morgan</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Julius Baer"> Julius Baer</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Merrill Lynch"> Merrill Lynch</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Morgan Stanley"> Morgan Stanley</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Raymond James"> Raymond James</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Safra"> Safra</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Santander"> Santander</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Scotia Wealth"> Scotia Wealth</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="UBS"> UBS</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="XP"> XP</label></div>
-                        <div class="bank-item"><label><input type="checkbox" name="bank" value="Outros"> Outros</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="andbank"> Andbank</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="avenue"> Avenue</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="bb-americas"> BB Americas</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="bolton"> Bolton Global</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="bradesco"> Bradesco</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="btg"> BTG Pactual</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="ca-indosuez"> CA Indosuez</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="charles-schwab"> Charles Schwab</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="citibank"> Citibank</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="credit-suisse"> Credit Suisse</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="efg-fidelity"> EFG Fidelity</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="goldman"> Goldman Sachs</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="helm"> Helm Bank</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="hsbc"> HSBC</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="idb"> IDB Bank</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="insigneo"> Insigneo</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="interactive"> Interactive Brokers</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="itau"> Itaú</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="julius-baer"> Julius Baer</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="jpmorgan"> JP Morgan</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="merrill"> Merrill Lynch</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="morgan-stanley"> Morgan Stanley</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="raymond-james"> Raymond James</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="safra"> Safra</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="santander"> Santander</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="scotia"> Scotia Wealth</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="snowden"> Snowden Lane Partners</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="stonex"> Stonex</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="ubs"> UBS</label></div>
+                        <div class="bank-checkbox"><label><input type="checkbox" name="bank" value="xp"> XP</label></div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="otherBanks">Se "Outros", especifique quais bancos:</label>
-                    <textarea name="otherBanks" placeholder="Ex: Banco X, Banco Y..."></textarea>
+                    <label for="otherBanks" data-pt="Outros bancos (lista aqui)" data-en="Other banks (list here)">Outros bancos (lista aqui)</label>
+                    <input type="text" id="otherBanks" name="otherBanks" placeholder="Ex: Banco X, Banco Y">
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>2. Possui investimentos em criptoativos? *</label>
+            <div class="question">
+                <p data-pt="2. Possui criptoativos? *" data-en="2. Do you hold cryptocurrencies? *"><strong>2. Possui criptoativos? *</strong></p>
                 <div class="radio-group">
                     <label>
                         <input type="radio" name="hasCrypto" value="sim" required>
-                        Sim
+                        <span data-pt="Sim" data-en="Yes">Sim</span>
                     </label>
                     <label>
                         <input type="radio" name="hasCrypto" value="nao" required>
-                        Não
+                        <span data-pt="Não" data-en="No">Não</span>
                     </label>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>3. Possui investimentos em fundos ou private equity não custodiados nos extratos bancários? *</label>
+            <div class="question">
+                <p data-pt="3. Possui fundos/private equity não custodiados? *" data-en="3. Do you hold non-custodied funds/private equity? *"><strong>3. Possui fundos/private equity não custodiados? *</strong></p>
                 <div class="radio-group">
                     <label>
                         <input type="radio" name="hasFundsEquity" value="sim" required>
-                        Sim
+                        <span data-pt="Sim" data-en="Yes">Sim</span>
                     </label>
                     <label>
                         <input type="radio" name="hasFundsEquity" value="nao" required>
-                        Não
+                        <span data-pt="Não" data-en="No">Não</span>
                     </label>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>4. Possui participação acionária em outra empresa? *</label>
+            <div class="question">
+                <p data-pt="4. Possui participação acionária em outra empresa? *" data-en="4. Do you hold equity interests in other companies? *"><strong>4. Possui participação acionária em outra empresa? *</strong></p>
                 <div class="radio-group">
                     <label>
                         <input type="radio" name="hasEquityParticipation" value="sim" required>
-                        Sim
+                        <span data-pt="Sim" data-en="Yes">Sim</span>
                     </label>
                     <label>
                         <input type="radio" name="hasEquityParticipation" value="nao" required>
-                        Não
+                        <span data-pt="Não" data-en="No">Não</span>
                     </label>
                 </div>
             </div>
 
-            <button type="submit">✓ Enviar Checklist</button>
+            <button type="submit" data-pt="✓ Enviar Checklist" data-en="✓ Submit Checklist">✓ Enviar Checklist</button>
         </form>
     </div>
 
     <script>
+        function changeLanguage() {
+            const lang = document.getElementById('languageSelect').value;
+            localStorage.setItem('language', lang);
+            applyLanguage(lang);
+        }
+
+        function applyLanguage(lang) {
+            document.querySelectorAll('[data-pt][data-en]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+        }
+
+        const savedLang = localStorage.getItem('language') || 'pt';
+        document.getElementById('languageSelect').value = savedLang;
+        applyLanguage(savedLang);
+
+        const bankNames = {
+            'andbank': 'Andbank',
+            'avenue': 'Avenue',
+            'bb-americas': 'BB Americas',
+            'bolton': 'Bolton Global',
+            'bradesco': 'Bradesco',
+            'btg': 'BTG Pactual',
+            'ca-indosuez': 'CA Indosuez',
+            'charles-schwab': 'Charles Schwab',
+            'citibank': 'Citibank',
+            'credit-suisse': 'Credit Suisse',
+            'efg-fidelity': 'EFG Fidelity',
+            'goldman': 'Goldman Sachs',
+            'helm': 'Helm Bank',
+            'hsbc': 'HSBC',
+            'idb': 'IDB Bank',
+            'insigneo': 'Insigneo',
+            'interactive': 'Interactive Brokers',
+            'itau': 'Itaú',
+            'julius-baer': 'Julius Baer',
+            'jpmorgan': 'JP Morgan',
+            'merrill': 'Merrill Lynch',
+            'morgan-stanley': 'Morgan Stanley',
+            'raymond-james': 'Raymond James',
+            'safra': 'Safra',
+            'santander': 'Santander',
+            'scotia': 'Scotia Wealth',
+            'snowden': 'Snowden Lane Partners',
+            'stonex': 'Stonex',
+            'ubs': 'UBS',
+            'xp': 'XP',
+        };
+
+        const servicoNames = {
+            'balanco-patrimonial': 'Balanço Patrimonial',
+            'imposto-renda-americano': 'Preparação de Imposto de Renda Americano',
+            'brgaap-llcs': 'Balanço BRGAAP para LLCs Americanas'
+        };
+
+        let uploadedFiles = [];
+
+        function updateFileList() {
+            const fileInput = document.getElementById('extratos');
+            const fileList = document.getElementById('fileList');
+            uploadedFiles = Array.from(fileInput.files);
+
+            fileList.innerHTML = '';
+            
+            if (uploadedFiles.length === 0) {
+                fileList.classList.add('hidden');
+                return;
+            }
+
+            fileList.classList.remove('hidden');
+
+            uploadedFiles.forEach((file, index) => {
+                const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span class="file-item-name">${file.name}</span>
+                    <span class="file-item-size">${sizeMB} MB</span>
+                    <button type="button" class="file-item-remove" onclick="removeFile(${index})">Remover</button>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            const fileInput = document.getElementById('extratos');
+            fileInput.value = '';
+            updateFileList();
+
+            const lang = document.getElementById('languageSelect').value;
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = 'message error';
+            messageDiv.textContent = lang === 'pt'
+                ? '⚠️ Arquivo removido. Selecione novamente todos os arquivos que deseja enviar.'
+                : '⚠️ File removed. Please select all files you want to upload again.';
+        }
+
         function toggleBankDetails() {
             const hasBankAccounts = document.querySelector('input[name="hasBankAccounts"]:checked')?.value;
             const bankDetails = document.getElementById('bankDetails');
+            
             if (hasBankAccounts === 'sim') {
                 bankDetails.classList.remove('hidden');
             } else {
@@ -203,69 +541,137 @@
 
         document.getElementById('checklistForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const messageDiv = document.getElementById('message');
-            const submitBtn = this.querySelector('button');
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const form = this;
             
             try {
-                const fileInput = this.querySelector('input[type="file"]');
-                const file = fileInput.files[0];
+                const lang = document.getElementById('languageSelect').value;
+
+                const fileInput = document.getElementById('extratos');
+                const files = Array.from(fileInput.files);
                 
-                if (!file) {
+                if (files.length === 0) {
                     messageDiv.className = 'message error';
-                    messageDiv.textContent = '❌ Por favor, envie um arquivo.';
+                    messageDiv.textContent = lang === 'pt'
+                        ? '❌ Por favor, envie pelo menos um documento.'
+                        : '❌ Please upload at least one document.';
                     return;
                 }
+
+                const maxSize = 25 * 1024 * 1024;
+                for (let file of files) {
+                    if (file.size > maxSize) {
+                        messageDiv.className = 'message error';
+                        messageDiv.textContent = lang === 'pt'
+                            ? `❌ Arquivo "${file.name}" é muito grande. Máximo permitido: 25MB`
+                            : `❌ File "${file.name}" is too large. Maximum allowed: 25MB`;
+                        return;
+                    }
+                }
                 
-                const servicosChecked = this.querySelectorAll('input[name="servicos"]:checked');
+                const servicosChecked = document.querySelectorAll('input[name="servicos"]:checked');
                 if (servicosChecked.length === 0) {
                     messageDiv.className = 'message error';
-                    messageDiv.textContent = '❌ Selecione pelo menos um serviço.';
+                    messageDiv.textContent = lang === 'pt' 
+                        ? '❌ Por favor, selecione pelo menos um serviço para orçamento.'
+                        : '❌ Please select at least one service for quote.';
                     return;
                 }
                 
-                const selectedBanks = Array.from(this.querySelectorAll('input[name="bank"]:checked'))
-                    .map(cb => cb.value)
+                const inputFields = document.querySelectorAll('input[type="text"], input[type="email"], input[type="radio"]:checked, select');
+                const data = {};
+                
+                for (let field of inputFields) {
+                    if (field.name && field.value && !['servicos', 'bank'].includes(field.name)) {
+                        data[field.name] = field.value;
+                    }
+                }
+                
+                const servicosArray = Array.from(document.querySelectorAll('input[name="servicos"]:checked'))
+                    .map(cb => '• ' + (servicoNames[cb.value] || cb.value))
+                    .join('<br>');
+                data.servicosArray = servicosArray;
+                
+                let selectedBanks = Array.from(document.querySelectorAll('input[name="bank"]:checked'))
+                    .map(cb => bankNames[cb.value] || cb.value)
                     .join(', ');
                 
-                const data = {
-                    clientName: this.querySelector('input[name="clientName"]').value,
-                    clientEmail: this.querySelector('input[name="clientEmail"]').value,
-                    companyName: this.querySelector('input[name="companyName"]').value,
-                    hasBankAccounts: this.querySelector('input[name="hasBankAccounts"]:checked').value,
-                    bankCount: this.querySelector('input[name="bankCount"]').value || '0',
-                    selectedBanks: selectedBanks,
-                    hasCrypto: this.querySelector('input[name="hasCrypto"]:checked').value,
-                    hasFundsEquity: this.querySelector('input[name="hasFundsEquity"]:checked').value,
-                    hasEquityParticipation: this.querySelector('input[name="hasEquityParticipation"]:checked').value,
-                    arquivo: file.name,
-                    tamanhoArquivo: (file.size / 1024 / 1024).toFixed(2) + ' MB',
-                    timestamp: new Date().toISOString()
-                };
+                const otherBanksInput = document.getElementById('otherBanks');
+                if (otherBanksInput && otherBanksInput.value && otherBanksInput.value.trim()) {
+                    selectedBanks = selectedBanks ? selectedBanks + ', ' + otherBanksInput.value.trim() : otherBanksInput.value.trim();
+                }
                 
-                const reader = new FileReader();
-                reader.onload = async function(e) {
-                    data.arquivo_base64 = e.target.result.split(',')[1];
-                    
-                    const response = await fetch('https://hook.us2.make.com/frjhyotus2dg2fqfj6iqydrecqa60c8u', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
+                data.selectedBanksArray = selectedBanks;
+                data.timestamp = new Date().toISOString();
+
+                submitBtn.disabled = true;
+                submitBtn.textContent = lang === 'pt' ? '⏳ Enviando...' : '⏳ Sending...';
+
+                const filesArray = [];
+
+                const processFile = (file) => {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const base64Content = e.target.result.split(',')[1];
+                            filesArray.push({
+                                nome: file.name,
+                                tamanho: (file.size / 1024 / 1024).toFixed(2) + ' MB',
+                                base64: base64Content
+                            });
+                            resolve();
+                        };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
                     });
-                    
-                    if (response.ok || response.status === 202) {
-                        messageDiv.className = 'message success';
-                        messageDiv.textContent = '✓ Recebido! Retornaremos em breve.';
-                        submitBtn.textContent = '✓ Enviado';
-                    } else {
-                        throw new Error('Erro');
-                    }
                 };
-                reader.readAsDataURL(file);
+
+                await Promise.all(files.map(processFile));
+
+                data.arquivos = filesArray;
+                data.totalArquivos = filesArray.length;
+
+                const webhookUrl = 'https://hook.us2.make.com/frjhyotus2dg2fqfj6iqydrecqa60c8u';
                 
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok || response.status === 202) {
+                    messageDiv.className = 'message success';
+                    const fileNames = filesArray.map(f => f.nome).join(', ');
+                    messageDiv.textContent = lang === 'pt'
+                        ? `✓ Obrigado! Recebemos seu checklist e ${filesArray.length} documento(s): ${fileNames}. Nossa equipe entrará em contato em breve com seu orçamento.`
+                        : `✓ Thank you! We received your checklist and ${filesArray.length} document(s): ${fileNames}. Our team will contact you soon with your quote.`;
+                    submitBtn.textContent = lang === 'pt' ? '✓ Enviado' : '✓ Sent';
+                    
+                    setTimeout(() => {
+                        form.reset();
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = lang === 'pt' ? '✓ Enviar Checklist' : '✓ Submit Checklist';
+                        messageDiv.className = 'message hidden';
+                        document.getElementById('bankDetails').classList.add('hidden');
+                        document.getElementById('fileList').classList.add('hidden');
+                    }, 3000);
+                } else {
+                    throw new Error('Erro ao enviar');
+                }
+
             } catch (error) {
                 messageDiv.className = 'message error';
-                messageDiv.textContent = '❌ Erro ao enviar.';
+                const lang = document.getElementById('languageSelect').value;
+                messageDiv.textContent = lang === 'pt'
+                    ? '❌ Erro ao enviar o formulário. Por favor, tente novamente.'
+                    : '❌ Error sending the form. Please try again.';
+                submitBtn.disabled = false;
+                submitBtn.textContent = lang === 'pt' ? '✓ Enviar Checklist' : '✓ Submit Checklist';
+                console.error('Error:', error);
             }
         });
     </script>
