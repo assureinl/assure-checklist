@@ -5,31 +5,198 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checklist Orçamento - Assure International</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #8AAD2A;
-            padding-bottom: 20px;
-        }
-        .lang-selector {
-            text-align: right;
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; color: #333; }
+        .container { max-width: 600px; margin: 40px auto; background: white; padding: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 3px solid #8AAD2A; padding-bottom: 20px; margin-bottom: 30px; }
+        h1 { color: #333; font-size: 24px; margin: 0; }
+        .subtitle { color: #666; font-size: 13px; margin: 5px 0 0 0; }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
+        input[type="text"], input[type="email"], input[type="file"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: inherit; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #8AAD2A; box-shadow: 0 0 5px rgba(138,173,42,0.3); }
+        .section-title { background-color: #8AAD2A; color: white; padding: 12px 15px; font-size: 15px; font-weight: bold; margin: 25px 0 15px 0; border-radius: 4px; }
+        .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+        .checkbox-item { display: flex; align-items: center; }
+        .checkbox-item input { width: auto; margin-right: 10px; cursor: pointer; }
+        button { width: 100%; padding: 12px; background-color: #8AAD2A; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        button:hover { background-color: #6d8620; }
+        .message { padding: 12px; border-radius: 4px; margin-bottom: 15px; font-weight: 500; display: none; }
+        .message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; display: block; }
+        .message.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: block; }
+        .file-info { font-size: 12px; color: #666; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Checklist Orçamento</h1>
+            <p class="subtitle">Balanço Patrimonial 2026 - Assure International</p>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <form id="checklistForm">
+            <div class="section-title">📝 Informações do Cliente</div>
+
+            <div class="form-group">
+                <label>Nome do Cliente *</label>
+                <input type="text" name="clientName" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email do Cliente *</label>
+                <input type="email" name="clientEmail" required>
+            </div>
+
+            <div class="form-group">
+                <label>Nome da Empresa *</label>
+                <input type="text" name="companyName" required>
+            </div>
+
+            <div class="form-group">
+                <label>Extratos e Documentos *</label>
+                <p class="file-info">(PDF, ZIP ou múltiplos arquivos - máx 25MB)</p>
+                <input type="file" name="extratos" accept=".pdf,.zip,.xlsx,.xls,.doc,.docx,.jpg,.png" required>
+            </div>
+
+            <div class="form-group">
+                <label>Serviços para Orçamento * (marque os necessários)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="balanco-patrimonial">
+                        <label style="margin: 0; font-weight: normal;">Balanço Patrimonial</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="imposto-renda-americano">
+                        <label style="margin: 0; font-weight: normal;">Preparação de Imposto de Renda Americano</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="brgaap-llcs">
+                        <label style="margin: 0; font-weight: normal;">Balanço BRGAAP para LLCs Americanas</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">💰 Ativos</div>
+
+            <div class="form-group">
+                <label>1. Possui contas bancárias? *</label>
+                <div style="display: flex; gap: 20px;">
+                    <label style="font-weight: normal; display: flex; align-items: center;">
+                        <input type="radio" name="hasBankAccounts" value="sim" required style="width: auto; margin-right: 8px;">
+                        Sim
+                    </label>
+                    <label style="font-weight: normal; display: flex; align-items: center;">
+                        <input type="radio" name="hasBankAccounts" value="nao" required style="width: auto; margin-right: 8px;">
+                        Não
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>2. Possui investimentos em criptoativos? *</label>
+                <div style="display: flex; gap: 20px;">
+                    <label style="font-weight: normal; display: flex; align-items: center;">
+                        <input type="radio" name="hasCrypto" value="sim" required style="width: auto; margin-right: 8px;">
+                        Sim
+                    </label>
+                    <label style="font-weight: normal; display: flex; align-items: center;">
+                        <input type="radio" name="hasCrypto" value="nao" required style="width: auto; margin-right: 8px;">
+                        Não
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>3. Possui investimentos em fundos ou private equity não custodiados nos extratos bancários? *</label>
+                <div style="display: flex; gap: 20px;">
+                    <label style="font-weight: normal; display: flex; align-items: center;">
+                        <input type="radio" name="hasFundsEquity" value="sim" required style="width: auto; margin-right: 8px;">
+                        Sim
+                    </label>
+                    <label style="font-weight: normal; display: flex; align-items: center;">
+                        <input type="radio" name="hasFundsEquity" value="nao" required style="width: auto; margin-right: 8px;">
+                        Não
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>4. Possui participação acionária em outra empresa? *</label>
+                <div style="display: flex; gap: 20px;">
+                    <label style="font-weight: normal; display: flex; align-items: center;">
+                        <input type="radio" name="hasEquityParticipation" value="sim" required style="width: auto; margin-right: 8px;">
+                        Sim
+                    </label>
+                    <label style="font-weight: normal; display: flex; align-items: center;">
+                        <input type="radio" name="hasEquityParticipation" value="nao" required style="width: auto; margin-right: 8px;">
+                        Não
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit">✓ Enviar Checklist</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('checklistForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const messageDiv = document.getElementById('message');
+            const submitBtn = this.querySelector('button');
+            
+            try {
+                const fileInput = this.querySelector('input[type="file"]');
+                const file = fileInput.files[0];
+                
+                if (!file) {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = '❌ Por favor, envie um arquivo.';
+                    return;
+                }
+                
+                const servicosChecked = this.querySelectorAll('input[name="servicos"]:checked');
+                if (servicosChecked.length === 0) {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = '❌ Selecione pelo menos um serviço.';
+                    return;
+                }
+                
+                const data = {
+                    clientName: this.querySelector('input[name="clientName"]').value,
+                    clientEmail: this.querySelector('input[name="clientEmail"]').value,
+                    companyName: this.querySelector('input[name="companyName"]').value,
+                    arquivo: file.name,
+                    tamanhoArquivo: (file.size / 1024 / 1024).toFixed(2) + ' MB',
+                    timestamp: new Date().toISOString()
+                };
+                
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    data.arquivo_base64 = e.target.result.split(',')[1];
+                    
+                    const response = await fetch('https://hook.us2.make.com/frjhyotus2dg2fqfj6iqydrecqa60c8u', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    if (response.ok || response.status === 202) {
+                        messageDiv.className = 'message success';
+                        messageDiv.textContent = '✓ Recebido! Retornaremos em breve.';
+                        submitBtn.textContent = '✓ Enviado';
+                    } else {
+                        throw new Error('Erro');
+                    }
+                };
+                reader.readAsDataURL(file);
+                
+            } catch (error) {
+                messageDiv.className = 'message error';
+                messageDiv.textContent = '❌ Erro ao enviar.';
+            }
+        });
+    </script>
+</body>
+</html>
