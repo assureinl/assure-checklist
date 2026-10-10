@@ -604,6 +604,13 @@
                 }
                 
                 data.selectedBanksArray = selectedBanks;
+
+                // Quantidade de contas bancárias (só se o cliente marcou "Sim")
+                const hasBank = document.querySelector('input[name="hasBankAccounts"]:checked')?.value;
+                data.bankAccountsCount = hasBank === 'sim'
+                    ? (document.getElementById('bankCount').value || '')
+                    : '';
+
                 data.timestamp = new Date().toISOString();
 
                 submitBtn.disabled = true;
